@@ -1,20 +1,14 @@
 #!/usr/bin/env python3
-"""
-start and end
-"""
-
-
+"""This module is for task n.0"""
 from typing import Tuple, List
 import csv
 
 
-def index_range(page: int, page_size: int) -> Tuple:
-    """
-    start and end
-    """
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
+    """this fucntion returns the atart and the end indexes"""
     start = (page - 1) * page_size
-    end = page * page_size
-    return(start, end)
+    end = start + page_size
+    return (start, end)
 
 
 class Server:
@@ -37,13 +31,11 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """
-        get page
-        """
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
-        start, end = index_range(page, page_size)
-        data = self.dataset()
-        if start >= len(data):
+        self.dataset()
+        re_tup = index_range(page, page_size)
+        if (len(self.__dataset[0]) <= re_tup[0]):
             return []
-        return data[start:end]
+        else:
+            return self.__dataset[re_tup[0]: re_tup[1]]
