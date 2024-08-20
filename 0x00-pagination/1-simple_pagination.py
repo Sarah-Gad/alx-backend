@@ -9,7 +9,7 @@ import csv
 def index_range(page: int, page_size: int) -> Tuple:
     """this fucntion returns the atart and the end indexes"""
     start = (page - 1) * page_size
-    end = page * page_size
+    end = start + page_size
     return (start, end)
 
 
@@ -37,7 +37,7 @@ class Server:
         assert isinstance(page_size, int) and page_size > 0
         self.dataset()
         re_tup = index_range(page, page_size)
-        if (len(self.__dataset[0]) <= re_tup[0]):
+        if (len(self.__dataset) <= re_tup[0]):
             return []
         else:
             return self.__dataset[re_tup[0]: re_tup[1]]
