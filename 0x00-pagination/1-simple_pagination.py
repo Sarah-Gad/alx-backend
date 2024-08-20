@@ -38,7 +38,7 @@ class Server:
         assert isinstance(page_size, int) and page_size > 0
         self.dataset()
         re_tup = index_range(page, page_size)
-        if (re_tup[0] >= len(self.__dataset)):
+        if (len(self.__dataset[0]) < re_tup[1]):
             return []
         else:
             return self.__dataset[re_tup[0]: re_tup[1]]
