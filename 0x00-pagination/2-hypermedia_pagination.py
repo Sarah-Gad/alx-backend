@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
-"""
-start and end
-"""
+"""This module is for task n.0"""
 
 
-from typing import Tuple, List, Dict, Any
+from typing import Tuple, List, Any, Dict
 import csv
-from math import ceil
+import math
 
 
 def index_range(page: int, page_size: int) -> Tuple:
-    """
-    start and end
-    """
+    """this fucntion returns the atart and the end indexes"""
     start = (page - 1) * page_size
-    end = page * page_size
-    return(start, end)
+    end = start + page_size
+    return (start, end)
 
 
 class Server:
@@ -38,30 +34,25 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """
-        get page
-        """
+        """"This fucntion will return a list of lists"""
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
-        start, end = index_range(page, page_size)
-        data = self.dataset()
-        if start >= len(data):
+        self.dataset()
+        re_tup = index_range(page, page_size)
+        if (len(self.__dataset) < re_tup[0]):
             return []
-        return data[start:end]
+        else:
+            return self.__dataset[re_tup[0]: re_tup[1]]
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
-        """
-        get info
-        """
-        data = self.get_page(page, page_size)
-        totla_data_len = len(self.dataset())
-        pages = ceil(totla_data_len / page_size)
-        hyper = {
-            'page_size': len(data),
-            'page': page,
-            'data': data,
-            'next_page': page + 1 if page < pages else None,
-            'prev_page': page - 1 if page > 1 else None,
-            'total_pages': pages
+        """"This fucntion will return a list of lists"""
+        re_dic = {
+            "page_size": page_size,
+            "page": page,
+            "data": self.get_page(page, page_size),
+            "next_page":  page + 1 if page + 1 <=
+            math.ceil(len(self.__dataset) / page_size) else None,
+            "prev_page": page - 1 if page > 1 else None,
+            "total_pages": math.ceil(len(self.__dataset) / page_size)
         }
-        return hyper
+        return re_dic
