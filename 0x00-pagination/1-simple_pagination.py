@@ -40,4 +40,4 @@ class Server:
         if (len(self.__dataset[0]) < re_tup[1]):
             return []
         else:
-            return [self.__dataset[re_tup[0]: re_tup[1]]]
+            return self.__dataset[re_tup[0]: re_tup[1]]
