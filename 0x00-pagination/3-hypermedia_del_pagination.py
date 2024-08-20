@@ -41,27 +41,17 @@ class Server:
         """
         Deletion-resilient pagination
         """
-        assert isinstance(index, int) and index >= 0
-
-        dataset = self.indexed_dataset()
-        total_items = len(dataset)
-        assert index < total_items
-
+        assert index < len(self.__indexed_dataset)
         data = []
-        next_index = index
-
-        for _ in range(page_size):
-            if next_index in dataset:
-                data.append(dataset[next_index])
-            next_index += 1
-            if next_index >= total_items:
-                break
-
-        next_index = next_index if next_index < total_items else None
-
-        return {
-            'index': index,
-            'next_index': next_index,
-            'page_size': len(data),
-            'data': data
+        inlin_index = index
+        while len(data) < page_size:
+            if inlin_index in self.__indexed_dataset:
+                data.append(self.__indexed_dataset[inlin_index])
+            inlin_index += 1
+        re_dict = {
+            "index": index,
+            "next_index": inlin_index,
+            "page_size": page_size,
+            "data": data
         }
+        return re_dict
