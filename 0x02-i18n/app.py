@@ -2,7 +2,7 @@
 """Task 1 Module"""
 from flask import Flask, render_template, request, g
 from typing import Union, Dict
-from flask_babel import Babel
+from flask_babel import Babel, format_datetime
 import pytz
 
 
@@ -71,7 +71,8 @@ def get_timezone() -> str:
 @app.route("/")
 def home():
     """This is the home page"""
-    return render_template("7-index.html")
+    g.time = format_datetime()
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
